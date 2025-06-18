@@ -94,7 +94,7 @@ if (!empty($metadataurl)) {
     } catch (Exception $exception) {
         echo '<p style="background: #FF8170">Unexpected error - please try again later<br></p>';
     }
-    if ($service->reloadform) {
+    if (isset($service) && $service->reloadform) {
         echo MetaDataFrontend::get_meta_data_form();
     }
     $repoform = MetaDataFrontend::get_repo_form();
