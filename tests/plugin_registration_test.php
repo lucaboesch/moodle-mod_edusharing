@@ -46,6 +46,7 @@ final class plugin_registration_test extends advanced_testcase {
      * Function test_register_plugin_returns_content_from_service_call_on_success
      *
      * @return void
+     * @covers \mod_edusharing\PluginRegistration::register_plugin()
      * @throws EduSharingUserException
      * @throws JsonException
      */
@@ -80,6 +81,7 @@ final class plugin_registration_test extends advanced_testcase {
      * Function test_register_plugin_throws_api_connection_exception_when_validate_session_fails_with_error
      *
      * @return void
+     * @covers \mod_edusharing\PluginRegistration::register_plugin()
      * @throws EduSharingUserException
      * @throws JsonException
      */
@@ -111,6 +113,7 @@ final class plugin_registration_test extends advanced_testcase {
      * Function test_register_plugin_throws_invalid_credentials_exception_if_user_is_no_admin
      *
      * @return void
+     * @covers \mod_edusharing\PluginRegistration::register_plugin()
      * @throws EduSharingUserException
      * @throws JsonException
      */
@@ -141,6 +144,7 @@ final class plugin_registration_test extends advanced_testcase {
      * Function test_register_plugin_throws_api_connection_exception_when_register_plugin_fails_with_error
      *
      * @return void
+     * @covers \mod_edusharing\PluginRegistration::register_plugin()
      * @throws EduSharingUserException
      * @throws JsonException
      */
@@ -175,6 +179,7 @@ final class plugin_registration_test extends advanced_testcase {
      * Function test_register_plugin_throws_json_exception_with_invalid_json_returned_from_api
      *
      * @return void
+     * @covers \mod_edusharing\PluginRegistration::register_plugin()
      * @throws EduSharingUserException
      * @throws JsonException
      */

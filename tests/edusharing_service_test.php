@@ -51,7 +51,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_get_ticket_returns_existing_ticket_if_cached_ticket_is_new
      *
      * @return void
-     *
+     * @covers \mod_edusharing\EduSharingService::get_ticket()
      * @throws Exception
      */
     public function test_if_get_ticket_returns_existing_ticket_if_cached_ticket_is_new(): void {
@@ -75,7 +75,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_get_ticket_returns_existing_ticket_if_auth_info_is_ok
      *
      * @return void
-     *
+     * @covers \mod_edusharing\EduSharingService::get_ticket()
      * @throws dml_exception
      * @throws Exception
      */
@@ -103,6 +103,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_getT_ticket_returns_ticket_from_auth_helper_if_no_cached_ticket_exists
      *
      * @return void
+     * @covers \mod_edusharing\EduSharingService::get_ticket()
      * @throws dml_exception
      */
     public function test_if_get_ticket_returns_ticket_from_auth_helper_if_no_cached_ticket_exists(): void {
@@ -137,6 +138,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_get_ticket_returns_ticket_from_auth_helper_if_ticket_is_too_old_and_auth_info_call_fails
      *
      * @return void
+     * @covers \mod_edusharing\EduSharingService::get_ticket()
      * @throws dml_exception
      */
     public function test_if_get_ticket_returns_ticket_from_auth_helper_if_ticket_is_too_old_and_auth_info_call_fails(): void {
@@ -173,6 +175,8 @@ final class edusharing_service_test extends \advanced_testcase {
 
     /**
      * Function test_if_create_usage_calls_node_helper_method_with_correct_params
+     *
+     * @covers \mod_edusharing\EduSharingService::create_usage()
      */
     public function test_if_create_usage_calls_node_helper_method_with_correct_params(): void {
         $usageobject              = new stdClass();
@@ -204,6 +208,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_get_usage_id_calls_node_helper_method_with_correct_params_and_returns_result
      *
      * @return void
+     * @covers \mod_edusharing\EduSharingService::get_usage_id()
      * @throws dml_exception
      */
     public function test_if_get_usage_id_calls_node_helper_method_with_correct_params_and_returns_result(): void {
@@ -232,6 +237,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_get_usage_id_throws_exception_if_node_helper_method_returns_null
      *
      * @return void
+     * @covers \mod_edusharing\EduSharingService::get_usage_id()
      * @throws dml_exception
      */
     public function test_if_get_usage_id_throws_exception_if_node_helper_method_returns_null(): void {
@@ -261,6 +267,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_delete_usage_calls_node_helper_method_with_proper_params
      *
      * @return void
+     * @covers \mod_edusharing\EduSharingService::delete_usage()
      * @throws dml_exception
      */
     public function test_if_delete_usage_calls_node_helper_method_with_proper_params(): void {
@@ -285,6 +292,7 @@ final class edusharing_service_test extends \advanced_testcase {
      * Function test_if_get_node_calls_node_helper_method_with_proper_params
      *
      * @return void
+     * @covers \mod_edusharing\EduSharingService::get_node()
      * @throws JsonException
      * @throws NodeDeletedException
      * @throws UsageDeletedException
@@ -310,6 +318,7 @@ final class edusharing_service_test extends \advanced_testcase {
     /**
      * test_if_update_instance_calls_db_methods_and_calls_creation_method_with_proper_params
      *
+     * @covers \mod_edusharing\EduSharingService::update_instance()
      * @return void
      */
     public function test_if_update_instance_calls_db_methods_and_calls_creation_method_with_proper_params(): void {
@@ -376,6 +385,7 @@ final class edusharing_service_test extends \advanced_testcase {
     /**
      * Function test_if_update_instance_resets_data_and_returns_false_on_update_error
      *
+     * @covers \mod_edusharing\EduSharingService::update_instance()
      * @return void
      */
     public function test_if_update_instance_resets_data_and_returns_false_on_update_error(): void {

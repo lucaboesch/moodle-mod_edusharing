@@ -48,6 +48,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_sets_all_config_entries_on_success
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      */
@@ -100,6 +101,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_generates_new_app_id_if_none_present
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      */
@@ -135,6 +137,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_uses_configured_app_id_if_found
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      */
@@ -171,6 +174,8 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_uses_app_id_class_variable_if_set
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
+     * @covers \mod_edusharing\MetadataLogic::set_app_id()
      * @throws EduSharingUserException
      * @throws dml_exception
      */
@@ -205,6 +210,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_does_not_set_host_aliases_if_none_are_set
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      */
@@ -241,6 +247,8 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_sets_host_aliases_if_set_as_class_variables
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
+     * @covers \mod_edusharing\MetadataLogic::set_host_aliases()
      * @throws EduSharingUserException
      * @throws dml_exception
      */
@@ -278,6 +286,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_does_not_set_wlo_guest_user_if_none_provided
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      **/
@@ -315,6 +324,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_does_set_wlo_guest_user_if_class_variable_is_set
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      **/
@@ -353,6 +363,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_import_metadata_generates_new_key_pair_if_none_found
      *
      * @return void
+     * @covers \mod_edusharing\MetadataLogic::import_metadata()
      * @throws EduSharingUserException
      * @throws dml_exception
      **/
@@ -391,7 +402,7 @@ final class metadata_logic_test extends advanced_testcase {
      * Function test_if_create_xml_metadata_creates_xml_with_all_needed_entries
      *
      * @return void
-     *
+     * @covers \mod_edusharing\MetadataLogic::create_xml_metadata()
      * @throws dml_exception
      */
     public function test_if_create_xml_metadata_creates_xml_with_all_needed_entries(): void {

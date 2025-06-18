@@ -44,6 +44,7 @@ final class install_upgrade_logic_test extends advanced_testcase {
      * Function test_parse_config_data_throws_exception_if_file_not_found
      *
      * @return void
+     * @covers \mod_edusharing\InstallUpgradeLogic::parse_config_data()
      * @throws JsonException
      */
     public function test_parse_config_data_throws_exception_if_file_not_found(): void {
@@ -57,6 +58,7 @@ final class install_upgrade_logic_test extends advanced_testcase {
      * Function test_parse_config_data_throws_json_exception_if_json_invalid
      *
      * @return void
+     * @covers \mod_edusharing\InstallUpgradeLogic::parse_config_data()
      * @throws JsonException
      */
     public function test_parse_config_data_throws_json_exception_if_json_invalid(): void {
@@ -69,6 +71,8 @@ final class install_upgrade_logic_test extends advanced_testcase {
      * Function test_perform_returns_void_if_all_goes_well
      *
      * @return void
+     * @covers \mod_edusharing\InstallUpgradeLogic::parse_config_data()
+     * @covers \mod_edusharing\InstallUpgradeLogic::perform()
      * @throws JsonException
      * @throws dml_exception
      */
