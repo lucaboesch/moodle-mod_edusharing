@@ -90,8 +90,10 @@ if (!empty($metadataurl)) {
         $service->import_metadata($metadataurl);
         echo '<h3 class="edu_success">Import successful.</h3>';
     } catch (EduSharingUserException $edusharinguserexception) {
+        debugging('Edusharing error importing metatada from repo: ' . $edusharinguserexception->getMessage());
         echo $edusharinguserexception->get_html_message();
     } catch (Exception $exception) {
+        debugging('General error importing metatada from repo: ' . $exception->getMessage());
         echo '<p style="background: #FF8170">Unexpected error - please try again later<br></p>';
     }
     if (isset($service) && $service->reloadform) {
