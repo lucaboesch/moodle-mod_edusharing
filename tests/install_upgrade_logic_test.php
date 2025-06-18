@@ -91,10 +91,10 @@ final class install_upgrade_logic_test extends advanced_testcase {
             ->with('http://localhost:8080/edu-sharing/metadata?format=lms&external=true');
         $metadatalogicmock->expects($this->once())
             ->method('create_xml_metadata')
-            ->will($this->returnValue('superTestData'));
+            ->willReturn('superTestData');
         $registrationlogicmock->expects($this->once())
             ->method('register_plugin')
-            ->will($this->returnValue(['appid' => 'testId']));
+            ->willReturn(['appid' => 'testId']);
         $logic = new InstallUpgradeLogic(__DIR__ . '/../tests/installConfigTest.json');
         $logic->set_registration_logic($registrationlogicmock);
         $logic->set_metadata_logic($metadatalogicmock);

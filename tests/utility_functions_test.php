@@ -35,7 +35,6 @@ use testUtils\TestStringGenerator;
  * @package mod_edusharing
  * @copyright  metaVentis GmbH — http://metaventis.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @covers \mod_edusharing\UtilityFunctions
  */
 final class utility_functions_test extends advanced_testcase {
     /**
@@ -54,9 +53,14 @@ final class utility_functions_test extends advanced_testcase {
      * @return void
      */
     public function test_if_get_object_id_from_url_triggers_warning_if_url_is_malformed(): void {
+        $handler = function($errno, $errstr) { 
+            $this->assertEquals(E_USER_WARNING, $errno);
+            $this->assertEquals('error_get_object_id_from_url', $errstr);
+        };
+        set_error_handler($handler, E_USER_WARNING);
         $utils = new UtilityFunctions();
-        $this->expectWarning();
         $utils->get_object_id_from_url('http://test.com:-80/hallo/');
+        restore_error_handler();
     }
 
     /**
@@ -220,12 +224,24 @@ final class utility_functions_test extends advanced_testcase {
         $edusharing1->id = 1;
         $edusharing2 = new stdClass();
         $edusharing2->id = 2;
+        $getCount = 0;
         $dbmock->expects($this->exactly(2))
             ->method('get_record')
-            ->withConsecutive(
-                ['edusharing', ['id' => 'resourceID1'], '*', MUST_EXIST],
-                ['edusharing', ['id' => 'resourceID2'], '*', MUST_EXIST]
-            )->willReturnOnConsecutiveCalls($edusharing1, $edusharing2);
+            ->with(
+                $this->equalTo('edusharing'),
+                $this->anything(),
+                $this->equalTo('*'),
+                $this->equalTo(MUST_EXIST)
+            )
+            ->willReturnCallback(function($table, $conditions, $fields, $mustexist) use (&$getCount, $edusharing1, $edusharing2) {
+                $getCount++;
+                if ($getCount === 1) {
+                    return $edusharing1;
+                } elseif ($getCount === 2) {
+                    return $edusharing2;
+                }
+                return null;
+            });
         $sectionid = 4;
         $moduleid = 5;
         $edusharing3 = clone $edusharing1;
@@ -234,16 +250,26 @@ final class utility_functions_test extends advanced_testcase {
         $edusharing4 = clone $edusharing2;
         $edusharing4->section_id = $sectionid;
         $edusharing4->module_id = $moduleid;
+        $updateCount = 0;
         $dbmock->expects($this->exactly(2))
             ->method('update_record')
-            ->withConsecutive(
-                ['edusharing', $edusharing3],
-                ['edusharing', $edusharing4]
+            ->with(
+                $this->equalTo('edusharing'),
+                $this->callback(function($data) use (&$updateCount, $edusharing3, $edusharing4) {
+                    $updateCount++;
+                    if ($updateCount === 1) {
+                        return $data == $edusharing3;
+                    }
+                    if ($updateCount === 2) {
+                        return $data == $edusharing4;
+                    }
+                    return null;
+                })
             );
         // phpcs:ignore -- GLOBALS is supposed to be all caps.
         $GLOBALS['DB'] = $dbmock;
-        $text = '<img resourceId=resourceID1& class="as_edusharing_atto_asda">';
-        $text .= '<a resourceId="resourceID2&" class="dsfg_edusharing_atto_afdd">text</a>';
+        $text = '<img resourceId=resourceId1& class="as_edusharing_atto_asda">';
+        $text .= '<a resourceId="resourceId2&" class="dsfg_edusharing_atto_afdd">text</a>';
         $utils = new UtilityFunctions();
         $utils->set_moodle_ids_in_edusharing_entries($text, $sectionid, $moduleid);
     }
@@ -264,22 +290,44 @@ final class utility_functions_test extends advanced_testcase {
         $edusharing1->id = 1;
         $edusharing2 = new stdClass();
         $edusharing2->id = 2;
+        $getCount = 0;
         $dbmock->expects($this->exactly(2))
             ->method('get_record')
-            ->withConsecutive(
-                ['edusharing', ['id' => 'resourceID1'], '*', MUST_EXIST],
-                ['edusharing', ['id' => 'resourceID2'], '*', MUST_EXIST]
-            )->willReturnOnConsecutiveCalls($edusharing1, $edusharing2);
+            ->with(
+                $this->equalTo('edusharing'),
+                $this->anything(),
+                $this->equalTo('*'),
+                $this->equalTo(MUST_EXIST)
+            )
+            ->willReturnCallback(function() use (&$getCount, $edusharing1, $edusharing2) {
+                $getCount++;
+                if ($getCount === 1) {
+                    return $edusharing1;
+                } elseif ($getCount === 2) {
+                    return $edusharing2;
+                }
+                return null;
+            });
         $sectionid = 4;
         $edusharing3 = clone $edusharing1;
         $edusharing3->section_id = $sectionid;
         $edusharing4 = clone $edusharing2;
         $edusharing4->section_id = $sectionid;
+        $updateCount = 0;
         $dbmock->expects($this->exactly(2))
             ->method('update_record')
-            ->withConsecutive(
-                ['edusharing', $edusharing3],
-                ['edusharing', $edusharing4]
+            ->with(
+                $this->equalTo('edusharing'),
+                $this->callback(function($data) use (&$updateCount, $edusharing3, $edusharing4) {
+                    $updateCount++;
+                    if ($updateCount === 1) {
+                        return $data == $edusharing3;
+                    }
+                    if ($updateCount === 2) {
+                        return $data == $edusharing4;
+                    }
+                    return null;
+                })
             );
         // phpcs:ignore -- GLOBALS is supposed to be all caps.
         $GLOBALS['DB'] = $dbmock;
@@ -329,12 +377,35 @@ final class utility_functions_test extends advanced_testcase {
         $dbmock                  = $this->getMockBuilder(moodle_database_for_testing::class)
             ->onlyMethods(['get_record'])
             ->getMock();
+        $getCount = 0;
         $dbmock->expects($this->exactly(2))
             ->method('get_record')
-            ->withConsecutive(
-                [],
-                ['edusharing', ['id' => 'instanceId'], '*', MUST_EXIST])
-            ->willReturnOnConsecutiveCalls($returnone, $returntwo);
+            ->with(
+                $this->callback(function ($param) use (&$getCount) {
+                    $getCount++;
+                    return $param === 'edusharing';
+                }),
+                $this->callback(function ($param) {
+                    return $param === ['id' => 'instanceId'];
+                }),
+                $this->callback(function ($param) use (&$getCount) {
+                    if ($getCount === 1) {
+                        return $param === 'id, name, intro, introformat';
+                    }
+                    return $param === '*';
+                }),
+                $this->callback(function ($param) {
+                    return $param === MUST_EXIST;
+                })
+            )
+            ->willReturnCallback(function() use (&$getCount, $returnone, $returntwo) {
+                if ($getCount === 1) {
+                    return $returnone;
+                } elseif ($getCount === 2) {
+                    return $returntwo;
+                }
+                return null;
+            });
         // phpcs:ignore -- GLOBALS is supposed to be all caps.
         $GLOBALS['DB'] = $dbmock;
         $result        = $utils->get_course_module_info($module);
